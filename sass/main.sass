@@ -1,5 +1,5 @@
 @import "bourbon"
-@import "vars.sass"
+@import "vars"
 @import "sprite"
 
 *::-webkit-input-placeholder
@@ -28,10 +28,11 @@ body textarea:required:valid
 //Custom Styles Here
 
 body
-	position: relatives
+	position: relative
 
-.arrow_2
-	@include sprite($arrow_2)
+.icon
+	display: inline-block
+
 
 //ALWAYS END
 @import "media"

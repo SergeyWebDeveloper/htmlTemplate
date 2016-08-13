@@ -16,7 +16,10 @@ gulp.task('sprite', function() {
                 imgName: 'sprite.png',
                 cssName: 'sprite.sass',
                 cssFormat: 'sass',
-                algorithm: 'left-right'
+                algorithm: 'left-right',
+                cssVarMap: function(sprite) {
+                    sprite.name = 'icon-' + sprite.name
+                }
             }));
 
     spriteData.img.pipe(gulp.dest('./app/img/')); // путь, куда сохраняем картинку
@@ -38,7 +41,7 @@ gulp.task('styles', function () {
 		includePaths: require('node-bourbon').includePaths
 	}).on('error', sass.logError))
 	.pipe(rename({suffix: '.min', prefix : ''}))
-	.pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
+	.pipe(autoprefixer({browsers: ['last 25 versions'], cascade: false}))
 	.pipe(cleanCSS())
 	.pipe(gulp.dest('app/css'))
 	.pipe(browserSync.stream());
