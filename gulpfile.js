@@ -19,7 +19,8 @@ gulp.task('sprite', function() {
                 algorithm: 'left-right',
                 cssVarMap: function(sprite) {
                     sprite.name = 'icon-' + sprite.name
-                }
+                },
+                imgPath: '../img/' + fileName
             }));
 
     spriteData.img.pipe(gulp.dest('./app/img/')); // путь, куда сохраняем картинку
@@ -49,10 +50,13 @@ gulp.task('styles', function () {
 
 gulp.task('scripts', function() {
 	return gulp.src([
-		'./libs/jquery/jquery-1.11.2.min.js'
+		'./libs/jquery/jquery-1.11.2.min.js',
+		'./libs/magnificPopup/jquery.magnific-popup.min.js',
+		'./libs/inputmask/jquery.maskedinput.min.js',
+		'./libs/owlcarousel/owl.carousel.min.js'
 		])
 		.pipe(concat('libs.js'))
-		// .pipe(uglify()) //Minify libs.js
+		.pipe(uglify()) //Minify libs.js
 		.pipe(gulp.dest('./app/js/'));
 });
 
