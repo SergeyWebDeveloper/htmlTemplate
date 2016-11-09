@@ -19,8 +19,7 @@ gulp.task('sprite', function() {
                 algorithm: 'left-right',
                 cssVarMap: function(sprite) {
                     sprite.name = 'icon-' + sprite.name
-                },
-                imgPath: '../img/' + fileName
+                }
             }));
 
     spriteData.img.pipe(gulp.dest('./app/img/')); // путь, куда сохраняем картинку
