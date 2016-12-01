@@ -27,8 +27,22 @@ body textarea:required:valid
 
 //Custom Styles Here
 
+.container
+	width: 1000px
+	margin: 0 auto
+	position: relative
+
+.clearfix
+	&:after
+		content: ''
+		display: table
+		clear: both
+
 body
 	position: relative
+	font-size: 14px
+	color: red
+	font-family: 'RobotoRegular'
 
 .icon
 	display: inline-block
