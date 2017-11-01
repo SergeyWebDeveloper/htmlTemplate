@@ -26,7 +26,7 @@ gulp.task('sprite', function() {
     spriteData.css.pipe(gulp.dest('./sass/')); // путь, куда сохраняем стили
 });
 
-gulp.task('browser-sync', ['styles', 'scripts'], function() {
+gulp.task('browser-sync', ['styles', 'scripts', 'vendor_style'], function() {
 		browserSync.init({
 				server: {
 						baseDir: "./app"
@@ -45,6 +45,18 @@ gulp.task('styles', function () {
 	.pipe(cleanCSS())
 	.pipe(gulp.dest('app/css'))
 	.pipe(browserSync.stream());
+});
+
+gulp.task('vendor_style', function () {
+	return gulp.src([
+			'./app/css/normalize.min.css',
+			'./app/css/owl.carousel.css',
+			'./app/css/magnific-popup.css'
+		])
+		.pipe(concat('vendorStyles.css'))
+		.pipe(cleanCSS())
+		.pipe(gulp.dest('app/css/'))
+		.pipe(browserSync.stream());
 });
 
 gulp.task('scripts', function() {
