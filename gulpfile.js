@@ -61,7 +61,7 @@ gulp.task('vendor_style', function () {
 
 gulp.task('scripts', function() {
 	return gulp.src([
-		'./libs/jquery/jquery-1.11.2.min.js',
+		'./libs/jquery/jquery-2.2.4.min.js',
 		'./libs/magnificPopup/jquery.magnific-popup.min.js',
 		'./libs/inputmask/jquery.maskedinput.min.js',
 		'./libs/owlcarousel/owl.carousel.min.js'
