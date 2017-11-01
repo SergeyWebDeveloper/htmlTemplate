@@ -1,29 +1,30 @@
 var gulp         = require('gulp'),
 		sass         = require('gulp-sass'),
 		autoprefixer = require('gulp-autoprefixer'),
-		cleanCSS    = require('gulp-clean-css'),
+		cleanCSS     = require('gulp-clean-css'),
 		rename       = require('gulp-rename'),
 		browserSync  = require('browser-sync').create(),
 		concat       = require('gulp-concat'),
-		spritesmith = require('gulp.spritesmith'),
+		spritesmith  = require('gulp.spritesmith'),
+		imagemin     = require('gulp-imagemin'),
 		uglify       = require('gulp-uglify');
 
 
 gulp.task('sprite', function() {
-    var spriteData = 
-        gulp.src('./app/img/sprite/*.*') // путь, откуда берем картинки для спрайта
-            .pipe(spritesmith({
-                imgName: 'sprite.png',
-                cssName: 'sprite.sass',
-                cssFormat: 'sass',
-                algorithm: 'left-right',
-                cssVarMap: function(sprite) {
-                    sprite.name = 'icon-' + sprite.name
-                }
-            }));
+		var spriteData = 
+				gulp.src('./app/img/sprite/*.*') // путь, откуда берем картинки для спрайта
+						.pipe(spritesmith({
+								imgName: 'sprite.png',
+								cssName: 'sprite.sass',
+								cssFormat: 'sass',
+								algorithm: 'left-right',
+								cssVarMap: function(sprite) {
+										sprite.name = 'icon-' + sprite.name
+								}
+						}));
 
-    spriteData.img.pipe(gulp.dest('./app/img/')); // путь, куда сохраняем картинку
-    spriteData.css.pipe(gulp.dest('./sass/')); // путь, куда сохраняем стили
+		spriteData.img.pipe(gulp.dest('./app/img/')); // путь, куда сохраняем картинку
+		spriteData.css.pipe(gulp.dest('./sass/')); // путь, куда сохраняем стили
 });
 
 gulp.task('browser-sync', ['styles', 'scripts', 'vendor_style'], function() {
@@ -34,6 +35,22 @@ gulp.task('browser-sync', ['styles', 'scripts', 'vendor_style'], function() {
 				notify: false
 		});
 });
+
+gulp.task('imagemin', () =>
+		gulp.src('app/img/*')
+				.pipe(imagemin([
+					imagemin.gifsicle({interlaced: true}),
+					imagemin.jpegtran({progressive: true}),
+					imagemin.optipng({optimizationLevel: 4}),
+					imagemin.svgo({
+					plugins: [
+							{removeViewBox: true},
+							{cleanupIDs: false}
+						]
+					})
+				]))
+				.pipe(gulp.dest('dist/img/'))
+);
 
 gulp.task('styles', function () {
 	return gulp.src('sass/*.sass')
@@ -58,6 +75,7 @@ gulp.task('vendor_style', function () {
 		.pipe(gulp.dest('app/css/'))
 		.pipe(browserSync.stream());
 });
+
 
 gulp.task('scripts', function() {
 	return gulp.src([
